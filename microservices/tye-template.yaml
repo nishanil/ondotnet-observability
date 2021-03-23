@@ -1,0 +1,59 @@
+name: microservices
+extensions:
+- name: seq
+  logPath: ./.logs
+services:
+- name: backend
+  project: backend/backend.csproj
+  env:
+  - name: ASPNETCORE_ENVIRONMENT
+    value: Development  
+  - name: UseFeatureManagement
+    value: True
+  - name: FeatureManagement__StaticWeatherAPI
+    value: True
+  - name: FeatureManagement__ExternalWeatherAPI
+    value: False  
+  - name: UseExporter
+    value: "zipkin"
+  - name: Zipkin__ServiceName
+    value: "backend"
+  - name: AzureMapSubscriptionKey
+    value: <Azure-Map-Subscription-Key>
+  - name: AppConfig__Endpoint
+    value: <App-Config-Endpoint>
+  - name: APPINSIGHTS_INSTRUMENTATIONKEY
+    value: <AppInsights-Instrumentation-Key>
+- name: frontend
+  project: frontend/frontend.csproj
+  env: 
+  - name: ASPNETCORE_ENVIRONMENT
+    value: Development
+  - name: UseFeatureManagement
+    value: True
+  - name: FeatureManagement__StaticWeatherAPI
+    value: True
+  - name: FeatureManagement__ExternalWeatherAPI
+    value: False   
+  - name: UseExporter
+    value: "zipkin"
+  - name: Zipkin__ServiceName
+    value: "frontend"
+  - name: AppConfig__Endpoint
+    value: <App-Config-Endpoint>
+  - name: APPINSIGHTS_INSTRUMENTATIONKEY
+    value: <AppInsights-Instrumentation-Key>    
+- name: webstatus
+  project: webstatus/webstatus.csproj
+  env:
+  - name: ASPNETCORE_ENVIRONMENT
+    value: Development
+- name: zipkin
+  image: openzipkin/zipkin
+  bindings:
+  - port: 9411
+- name: redis
+  image: redis
+  bindings:
+  - port: 6379
+    connectionString: "${host}:${port}"

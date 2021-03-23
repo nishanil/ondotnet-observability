@@ -1,0 +1,5 @@
+kubectl port-forward svc/frontend 9001:80
+kubectl port-forward svc/backend 9000:80
+kubectl port-forward svc/webstatus 9007:80
+kubectl port-forward svc/zipkin 9411:9411
+kubectl port-forward svc/seq 5341:80

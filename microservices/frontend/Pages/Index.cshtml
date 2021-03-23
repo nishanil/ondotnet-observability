@@ -1,0 +1,83 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+@addTagHelper *, Microsoft.FeatureManagement.AspNetCore
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript">
+        function loadWeatherData() {
+            var cityValue = document.getElementById("city");
+            var getvalue = cityValue.options[cityValue.selectedIndex].value;
+
+            window.location.href = "?query=" + getvalue
+        }
+
+        $(document).ready(function () {
+            var urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('query')) {
+                $("#city").val(urlParams.get('query'));
+            }
+            else {
+                $("#city").val("12.9716,77.5946");
+            }
+
+        });
+
+    </script>
+</head>
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<h2>
+    <feature name="StaticWeatherAPI">
+        <p>Static Weather Data</p>
+    </feature>
+    <feature name="ExternalWeatherAPI">
+        <p>Azure Weather Map Data</p>
+    </feature>
+</h2>
+
+<feature name="ExternalWeatherAPI">    
+    <select name="city" id="city" onchange="loadWeatherData()">
+        <option value="12.9716,77.5946">Bangalore</option>
+        <option value="47.6062,122.3321">Seattle</option>
+        <option value="51.5074,0.1278">London</option>
+    </select>
+</feature>
+
+
+Weather Forecast:
+
+<div style="color: #D8000C; background-color: #FFBABA">
+    @Model.ErrorMessage
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Temp. (C)</th>
+            <th>Temp. (F)</th>
+            <th>Summary</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var forecast in @Model.Forecasts)
+        {
+            <tr>
+                <td>@forecast.Date.ToShortDateString()</td>
+                <td>@forecast.TemperatureC</td>
+                <td>@forecast.TemperatureF</td>
+                <td>@forecast.Summary</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
