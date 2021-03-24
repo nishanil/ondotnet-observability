@@ -137,8 +137,8 @@ namespace backend
             var redisConnectionStr = configuration.GetConnectionString("redis");
 
             services.AddHealthChecks()
-                .AddCheck("self", () => HealthCheckResult.Healthy())
-                .AddRedis(redisConnectionStr, name: "redis-check", tags: new string[] { "redis" });
+                .AddCheck("self", () => HealthCheckResult.Healthy());
+                //.AddRedis(redisConnectionStr, name: "redis-check", tags: new string[] { "redis" });
 
             return services;
         }
