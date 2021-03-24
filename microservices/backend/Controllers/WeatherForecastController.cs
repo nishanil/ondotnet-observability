@@ -38,97 +38,76 @@ namespace backend.Controllers
 
         // Implementation without cache
 
-        //[HttpGet]
-        //public async Task<string> Get([FromServices] IDistributedCache cache, string query = "12.9716,77.5946")
-        //{
-        //    try
-        //    {
-        //        using (var activity = _activitySource.StartActivity("GET:Recevied", ActivityKind.Server))
-        //        {
-
-        //            _logger.LogInformation("{Method} - was called ", "backend.Controllers.WeatherForecastController.Get");
-
-        //            // Fetching data from cache
-        //            var weather = string.Empty;
-
-        //            if (await _featureManager.IsEnabledAsync("ExternalWeatherAPI"))
-        //            {
-        //                _logger.LogInformation("Calling external api");
-        //                weather = await GetWeatherExternalData(query);
-        //            }
-        //            else
-        //            {
-        //                _logger.LogInformation("Fetching static data");
-        //                weather = await GetWeatherStaticData();
-        //            }
-
-        //            _logger.LogInformation("Weather data - {data}", weather);
-
-        //            _logger.LogInformation("Weather data fetched !");
-
-        //            return weather;
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _logger.LogError("Unable to fetch weather data !", ex);
-        //        throw;
-        //    }
-        //}
-
         [HttpGet]
-        public async Task<string> Get([FromServices] IDistributedCache cache, string query = "12.9716,77.5946")
+        public async Task<string> Get()
         {
-            try
-            {
-                using (var activity = _activitySource.StartActivity("GET:Recevied", ActivityKind.Server))
-                {                    
-                    _logger.LogInformation("{Method} - was called ", "backend.Controllers.WeatherForecastController.Get");
-                    
-                    // Fetching data from cache
-                    var weather = await cache.GetStringAsync("weather");
-                    
-                    if (weather == null)
-                    {
-                        _logger.LogInformation("Cache Empty !");
-
-                        if (await _featureManager.IsEnabledAsync("ExternalWeatherAPI"))
-                        {
-                            _logger.LogInformation("Calling external api");
-                            weather = await GetWeatherExternalData(query);
-                        }
-                        else
-                        {
-                            _logger.LogInformation("Fetching static data");
-                            weather = await GetWeatherStaticData();
-                        }
-
-                        _logger.LogInformation("Updating cache value");
-
-                        await cache.SetStringAsync("weather", weather, new DistributedCacheEntryOptions
-                        {
-                            AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(1)
-                        });
-                    }
-                    else
-                    {
-                        _logger.LogInformation("Weather data found in cache !");
-                    }
-
-                    _logger.LogInformation("Weather data - {data}", weather);
-
-                    _logger.LogInformation("Weather data fetched !");
-
-                    return weather;
-
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("Unable to fetch weather data !", ex);
-                throw;
-            }
+           try
+           {
+            _logger.LogInformation("{Method} - was called ", "backend.Controllers.WeatherForecastController.Get");
+            var weather = await GetWeatherStaticData();
+            _logger.LogInformation("Weather data - {data}", weather);
+            return weather;
+           }
+           catch (Exception ex)
+           {
+               _logger.LogError("Unable to fetch weather data !", ex);
+               throw;
+           }
         }
+
+        // [HttpGet]
+        // public async Task<string> Get([FromServices] IDistributedCache cache, string query = "12.9716,77.5946")
+        // {
+        //     try
+        //     {
+        //         using (var activity = _activitySource.StartActivity("GET:Recevied", ActivityKind.Server))
+        //         {                    
+        //             _logger.LogInformation("{Method} - was called ", "backend.Controllers.WeatherForecastController.Get");
+                    
+        //             // Fetching data from cache
+        //             var weather = await cache.GetStringAsync("weather");
+                    
+        //             if (weather == null)
+        //             {
+        //                 _logger.LogInformation("Cache Empty !");
+
+        //                 if (await _featureManager.IsEnabledAsync("ExternalWeatherAPI"))
+        //                 {
+        //                     _logger.LogInformation("Calling external api");
+        //                     weather = await GetWeatherExternalData(query);
+        //                 }
+        //                 else
+        //                 {
+        //                     _logger.LogInformation("Fetching static data");
+        //                     weather = await GetWeatherStaticData();
+        //                 }
+
+        //                 _logger.LogInformation("Updating cache value");
+
+        //                 await cache.SetStringAsync("weather", weather, new DistributedCacheEntryOptions
+        //                 {
+        //                     AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(1)
+        //                 });
+        //             }
+        //             else
+        //             {
+        //                 _logger.LogInformation("Weather data found in cache !");
+        //             }
+
+        //             _logger.LogInformation("Weather data - {data}", weather);
+
+        //             _logger.LogInformation("Weather data fetched !");
+
+        //             return weather;
+
+        //         }
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         _logger.LogError("Unable to fetch weather data !", ex);
+        //         throw;
+        //     }
+        // }
 
         private async Task<string> GetWeatherStaticData()
         {

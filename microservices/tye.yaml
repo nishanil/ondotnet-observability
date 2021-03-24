@@ -1,7 +1,7 @@
 name: microservices
-extensions:
-- name: seq
-  logPath: ./.logs
+# extensions:
+# - name: seq
+#   logPath: ./.logs
 services:
 - name: backend
   project: backend/backend.csproj
@@ -52,8 +52,8 @@ services:
   image: openzipkin/zipkin
   bindings:
   - port: 9411
-- name: redis
-  image: redis
-  bindings:
-  - port: 6379
-    connectionString: "${host}:${port}"
+# - name: redis
+#   image: redis
+#   bindings:
+#   - port: 6379
+#     connectionString: "${host}:${port}"

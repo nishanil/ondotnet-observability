@@ -43,30 +43,30 @@ namespace frontend
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                })
-                .ConfigureAppConfiguration((builderContext, configBuilder) =>
-                {
-                    configBuilder.AddEnvironmentVariables();
-                    var settings = configBuilder.Build();
-                    if (settings.GetValue<bool>("UseFeatureManagement") && !string.IsNullOrEmpty(settings["AppConfig:Endpoint"]))
-                    {
-                        configBuilder.AddAzureAppConfiguration(options =>
-                        {
-                            var cacheTime = TimeSpan.FromSeconds(5);
-
-                            options.Connect(settings["AppConfig:Endpoint"])
-                                .UseFeatureFlags(flagOptions =>
-                                {
-                                    flagOptions.CacheExpirationInterval = cacheTime;
-                                })
-                                .ConfigureRefresh(refreshOptions =>
-                                {
-                                    refreshOptions.Register("FeatureManagement:ExternalWeatherAPI", refreshAll: true)
-                                                  .SetCacheExpiration(cacheTime);
-                                });
-                        });
-                    }
                 });
+                // .ConfigureAppConfiguration((builderContext, configBuilder) =>
+                // {
+                //     configBuilder.AddEnvironmentVariables();
+                //     var settings = configBuilder.Build();
+                //     if (settings.GetValue<bool>("UseFeatureManagement") && !string.IsNullOrEmpty(settings["AppConfig:Endpoint"]))
+                //     {
+                //         configBuilder.AddAzureAppConfiguration(options =>
+                //         {
+                //             var cacheTime = TimeSpan.FromSeconds(5);
+
+                //             options.Connect(settings["AppConfig:Endpoint"])
+                //                 .UseFeatureFlags(flagOptions =>
+                //                 {
+                //                     flagOptions.CacheExpirationInterval = cacheTime;
+                //                 })
+                //                 .ConfigureRefresh(refreshOptions =>
+                //                 {
+                //                     refreshOptions.Register("FeatureManagement:ExternalWeatherAPI", refreshAll: true)
+                //                                   .SetCacheExpiration(cacheTime);
+                //                 });
+                //         });
+                //     }
+                // });
 
         private static IConfiguration GetConfiguration()
         {

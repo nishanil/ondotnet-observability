@@ -50,7 +50,7 @@ namespace backend
             if (Configuration.UseFeatureManagement())
             {
                 services.AddFeatureManagement();
-                services.AddAzureAppConfiguration();
+                //services.AddAzureAppConfiguration();
             }
 
             services.AddHealthChecks(Configuration);
@@ -69,10 +69,10 @@ namespace backend
 
             }
 
-            if (Configuration.UseFeatureManagement())
-            {
-                app.UseAzureAppConfiguration();
-            }
+            // if (Configuration.UseFeatureManagement())
+            // {
+            //     app.UseAzureAppConfiguration();
+            // }
 
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "backend v1"));

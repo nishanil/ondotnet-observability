@@ -47,7 +47,7 @@ namespace frontend
             if (Configuration.UseFeatureManagement())
             {
                 services.AddFeatureManagement();
-                services.AddAzureAppConfiguration();
+               // services.AddAzureAppConfiguration();
             }
 
             services.AddHealthChecks(Configuration);
@@ -74,10 +74,10 @@ namespace frontend
                 app.UsePathBase(pathBase);
             }
 
-            if (Configuration.UseFeatureManagement())
-            {
-                app.UseAzureAppConfiguration();
-            }
+            // if (Configuration.UseFeatureManagement())
+            // {
+            //     app.UseAzureAppConfiguration();
+            // }
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

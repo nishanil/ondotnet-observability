@@ -350,5 +350,3 @@ MigrationBackup/
 .ionide/
 
 *.logs
-
-tye.yaml
