@@ -1,15 +1,10 @@
-﻿using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
-namespace WebStatus
+namespace webstatus
 {
     public class Startup
     {
@@ -21,50 +16,32 @@ namespace WebStatus
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
+        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            
+            services.AddHealthChecksUI(setup =>
+            {
+                setup.SetEvaluationTimeInSeconds(1);
+                // It can only run with Tye -- service discovery
+                var frontendBaseAddress = Configuration.GetServiceUri("frontend");
+                var backendBaseAddress = Configuration.GetServiceUri("backend");
 
-            RegisterAppInsights(services);
-
-            services.AddControllers();
-
-            services.AddOptions();
-            services.AddHealthChecks()
-                .AddCheck("self", () => HealthCheckResult.Healthy());
-
-            services
-                .AddHealthChecksUI(setupSettings: setup =>
-                {
-                    // It can only run with Tye -- service discovery
-                    var frontendBaseAddress = Configuration.GetServiceUri("frontend");
-                    var backendBaseAddress = Configuration.GetServiceUri("backend");
-
-                    setup.SetEvaluationTimeInSeconds(5); //Configures the UI to poll for healthchecks updates every 5 seconds
-                    setup.AddHealthCheckEndpoint("frontend", $"{frontendBaseAddress}hc" );
-                    setup.AddHealthCheckEndpoint("backend", $"{backendBaseAddress}hc");
-                })
-                .AddInMemoryStorage();
-
-            services.AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-           
+                setup.SetEvaluationTimeInSeconds(5); //Configures the UI to poll for healthchecks updates every 5 seconds
+                setup.AddHealthCheckEndpoint("frontend", $"{frontendBaseAddress}hc");
+                setup.AddHealthCheckEndpoint("backend", $"{backendBaseAddress}hc");
+                //time in seconds between check
+            }).AddInMemoryStorage();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            //loggerFactory.AddAzureWebAppDiagnostics();
-            //loggerFactory.AddApplicationInsights(app.ApplicationServices, LogLevel.Trace);
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-            }
+
+            app.UseRouting();
 
             var pathBase = Configuration["PATH_BASE"];
             if (!string.IsNullOrEmpty(pathBase))
@@ -78,28 +55,13 @@ namespace WebStatus
                 config.UIPath = "/hc-ui";
             });
 
-            app.UseStaticFiles();
-
-            app.UseRouting();
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapDefaultControllerRoute();
-                endpoints.MapHealthChecks("/liveness", new HealthCheckOptions
+                endpoints.MapGet("/", async context =>
                 {
-                    Predicate = r => r.Name.Contains("self")
-                });
-                endpoints.MapHealthChecks("/hc", new HealthCheckOptions
-                {
-                    Predicate = _ => true,
-                    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+                    context.Response.Redirect($"{pathBase}/hc-ui");
                 });
             });
-        }
-
-        private void RegisterAppInsights(IServiceCollection services)
-        {
-            services.AddApplicationInsightsTelemetry(Configuration);
-            services.AddApplicationInsightsKubernetesEnricher();
         }
     }
 }

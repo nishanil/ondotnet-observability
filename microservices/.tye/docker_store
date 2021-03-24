@@ -1,4 +1,4 @@
-{"container":"zipkin_db255cb9-c"}
-{"container":"backend-proxy_166a133e-2"}
-{"container":"frontend-proxy_c946968e-d"}
-{"container":"webstatus-proxy_590eb588-b"}
+{"container":"zipkin_99a65d51-7"}
+{"container":"backend-proxy_6b208194-b"}
+{"container":"frontend-proxy_a931eb47-3"}
+{"container":"webstatus-proxy_18310028-e"}
