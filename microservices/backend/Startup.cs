@@ -19,6 +19,7 @@ using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Microsoft.FeatureManagement;
 using backend.Services;
+using Serilog;
 
 namespace backend
 {
@@ -73,10 +74,11 @@ namespace backend
             {
                 app.UseAzureAppConfiguration();
             }
-
+            
             app.UseSwagger();
-            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "backend v1"));
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "backend v1"));            
 
+            app.UseSerilogRequestLogging();
             app.UseHttpsRedirection();
 
             app.UseRouting();

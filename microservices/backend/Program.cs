@@ -47,6 +47,7 @@ namespace backend
                 {
                     webBuilder.UseStartup<Startup>();
                 })
+                .UseSerilog()
                 .ConfigureAppConfiguration((builderContext, configBuilder) =>
                 {
                     configBuilder.AddEnvironmentVariables();
