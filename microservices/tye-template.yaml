@@ -5,6 +5,14 @@ extensions:
 services:
 - name: backend
   project: backend/backend.csproj
+  liveness:
+      http:
+        path: /liveness
+      initialDelay: 1
+  readiness:
+      http:
+        path: /hc
+      initialDelay: 1
   env:
   - name: ASPNETCORE_ENVIRONMENT
     value: Development  
@@ -23,9 +31,17 @@ services:
   - name: AppConfig__Endpoint
     value: <App-Config-Endpoint>
   - name: APPINSIGHTS_INSTRUMENTATIONKEY
-    value: <AppInsights-Instrumentation-Key>
+    value: <AppInsights-Instrumentation-Key>  
 - name: frontend
   project: frontend/frontend.csproj
+  liveness:
+      http:
+        path: /liveness
+      initialDelay: 1
+  readiness:
+      http:
+        path: /hc
+      initialDelay: 1
   env: 
   - name: ASPNETCORE_ENVIRONMENT
     value: Development
