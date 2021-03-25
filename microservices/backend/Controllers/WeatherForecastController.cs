@@ -86,7 +86,7 @@ namespace backend.Controllers
 
         //                 await cache.SetStringAsync("weather", weather, new DistributedCacheEntryOptions
         //                 {
-        //                     AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(1)
+        //                     AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(5)
         //                 });
         //             }
         //             else
