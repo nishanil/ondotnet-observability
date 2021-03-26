@@ -77,7 +77,7 @@ Before you plan to deploy the application in Azure you need to make sure you hav
 - You need to make sure that you have configured the existing `Container Registry` during the Kubernetes cluster creation step. But in case if you have missed out that you can still [configure ACR integration for existing AKS clusters](https://docs.microsoft.com/en-us/azure/aks/cluster-container-registry-integration#configure-acr-integration-for-existing-aks-clusters)
 - Once the cluster is up and running, you need to configure the kubectl to connect to your Kubernetes cluster using the `az aks get-credentials` command.
 
-    ![](/images/monitor-aks.PNG)
+    ![](/images/monitor-aks.png)
 
 
 ### Deploy all required components to k8s
