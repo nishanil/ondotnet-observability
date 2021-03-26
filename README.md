@@ -11,7 +11,7 @@ Samples for HealthCheck, Monitoring and Feature Management
 
 Navigate to the `microservices` folder in a CLI. Then run the command `tye run`. Tye dashboard will be available at `http://127.0.0.1:8000/`
 
-![](/img/tye-local-run.png)
+![](/imgs/tye-local-run.png)
 
 If you're new to Tye, checkout the [getting started](https://github.com/dotnet/tye/blob/main/docs/getting_started.md) guide first.
 
@@ -41,14 +41,16 @@ Before you plan to deploy the application in Azure you need to make sure you hav
 - You need to [Create an Application Insights resource](https://docs.microsoft.com/en-us/azure/azure-monitor/app/create-new-resource) and copy the instrumentation key.
 - And then replace the **`<AppInsights-Instrumentation-Key>`** in `tye.yaml` with the previously copied instrumentation key.
 
-    ![](/img/appinsights.png)
+    ![](/imgs/appinsights.png)
+
 
 #### Azure Maps Account 
 
 - You will need to create a [Azure Maps Account](https://docs.microsoft.com/en-us/azure/azure-maps/how-to-manage-account-keys)
 - And replace **`<Azure-Map-Subscription-Key>`** in `tye.yaml` with the **`Primary Key`** mentioned in [Manage authentication in Azure Maps](https://docs.microsoft.com/en-us/azure/azure-maps/how-to-manage-authentication)
 
-    ![](/img/azure-map-account.png)
+    ![](/imgs/azure-map-account.png)
+
 
 #### App Configuration
 - In production these app uses `FeatureManagement` which is configured as Feature Manager of `Azure App Configuration` 
@@ -59,13 +61,15 @@ Before you plan to deploy the application in Azure you need to make sure you hav
 - You can keep one of the features enabled based on your choice. 
 - Once you have configured this, you need to replace `<App-Config-Endpoint>` value with respective `AppConfig Endpoint ConnectionString`. It looks something like `Endpoint=<AppConfig-Endpoint>Secret=<Secret>`
 
-    ![](/img/feature-manager.png)
+    ![](/imgs/feature-manager.png)
+
 
 #### Azure Container Registry (ACR)
 
 - You need to [Create a container registry](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-get-started-portal#create-a-container-registry) to store all your docker images for the Kubernetes cluster.
 
-    ![](/img/acr-repos.png)
+    ![](/imgs/acr-repos.png)
+
 
 #### Azure Kubernetes Service (AKS)
 
@@ -73,7 +77,8 @@ Before you plan to deploy the application in Azure you need to make sure you hav
 - You need to make sure that you have configured the existing `Container Registry` during the Kubernetes cluster creation step. But in case if you have missed out that you can still [configure ACR integration for existing AKS clusters](https://docs.microsoft.com/en-us/azure/aks/cluster-container-registry-integration#configure-acr-integration-for-existing-aks-clusters)
 - Once the cluster is up and running, you need to configure the kubectl to connect to your Kubernetes cluster using the `az aks get-credentials` command.
 
-    ![](/img/monitor-aks.PNG)
+    ![](/imgs/monitor-aks.PNG)
+
 
 ### Deploy all required components to k8s
 
@@ -92,11 +97,11 @@ Before you plan to deploy the application in Azure you need to make sure you hav
 
 - After successful deployment, you can make sure if everything is up and running using the command `kubectl get pods`
 
-    ![](/img/kubectl-get-pods.png)
+    ![](/imgs/kubectl-get-pods.png)
 
 - And you can look at all the running services using the command `kubectl get svc`
 
-    ![](/img/kubectl-get-svcs.png)
+    ![](/imgs/kubectl-get-svcs.png)
 
 - To access a specific application you need to forward that service port to one of your local port and browse that url. 
 For e.g : if you want to access `frontend` service, you can use `kubectl port-forward svc/frontend 9001:80` and browse the `frontend` app at `http://localhost:9001`
@@ -107,7 +112,7 @@ For e.g : if you want to access `frontend` service, you can use `kubectl port-fo
 
 - You can create your own custom dashboard to monitor different aspects of your infra and application. Just like how it has been shown below :
 
-    ![](/img/azure-dashboard.png)
+    ![](/imgs/azure-dashboard.png)
 
 
 ## Additional Resources
