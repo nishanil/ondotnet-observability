@@ -11,7 +11,7 @@ Samples for HealthCheck, Monitoring and Feature Management
 
 - Navigate to the `microservices` folder in a CLI. Then run the command `tye run`. Tye dashboard will be available at `http://127.0.0.1:8000/`
 
-    ![](/imgs/tye-local-run.png)
+![](/imgs/tye-local-run.png)
 
 If you're new to Tye, checkout the [getting started](https://github.com/dotnet/tye/blob/main/docs/getting_started.md) guide first.
 
@@ -41,7 +41,7 @@ Before you plan to deploy the application in Azure you need to make sure you hav
 - You need to [Create an Application Insights resource](https://docs.microsoft.com/en-us/azure/azure-monitor/app/create-new-resource) and copy the instrumentation key.
 - And then replace the **`<AppInsights-Instrumentation-Key>`** in `tye.yaml` with the previously copied instrumentation key.
 
-    ![](/imgs/appinsights.png)
+![](/imgs/appinsights.png)
 
 
 #### Azure Maps Account 
@@ -49,7 +49,7 @@ Before you plan to deploy the application in Azure you need to make sure you hav
 - You will need to create a [Azure Maps Account](https://docs.microsoft.com/en-us/azure/azure-maps/how-to-manage-account-keys)
 - And replace **`<Azure-Map-Subscription-Key>`** in `tye.yaml` with the **`Primary Key`** mentioned in [Manage authentication in Azure Maps](https://docs.microsoft.com/en-us/azure/azure-maps/how-to-manage-authentication)
 
-    ![](/imgs/azure-map-account.png)
+![](/imgs/azure-map-account.png)
 
 
 #### App Configuration
@@ -61,14 +61,14 @@ Before you plan to deploy the application in Azure you need to make sure you hav
 - You can keep one of the features enabled based on your choice. 
 - Once you have configured this, you need to replace `<App-Config-Endpoint>` value with respective `AppConfig Endpoint ConnectionString`. It looks something like `Endpoint=<AppConfig-Endpoint>Secret=<Secret>`
 
-    ![](/imgs/feature-manager.png)
+![](/imgs/feature-manager.png)
 
 
 #### Azure Container Registry (ACR)
 
 - You need to [Create a container registry](https://docs.microsoft.com/en-us/azure/container-registry/container-registry-get-started-portal#create-a-container-registry) to store all your docker images for the Kubernetes cluster.
 
-    ![](/imgs/acr-repos.png)
+![](/imgs/acr-repos.png)
 
 
 #### Azure Kubernetes Service (AKS)
@@ -77,7 +77,7 @@ Before you plan to deploy the application in Azure you need to make sure you hav
 - You need to make sure that you have configured the existing `Container Registry` during the Kubernetes cluster creation step. But in case if you have missed out that you can still [configure ACR integration for existing AKS clusters](https://docs.microsoft.com/en-us/azure/aks/cluster-container-registry-integration#configure-acr-integration-for-existing-aks-clusters)
 - Once the cluster is up and running, you need to configure the kubectl to connect to your Kubernetes cluster using the `az aks get-credentials` command.
 
-    ![](/imgs/monitor-aks.PNG)
+![](/imgs/monitor-aks.PNG)
 
 
 ### Deploy all required components to k8s
