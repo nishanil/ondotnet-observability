@@ -9,9 +9,9 @@ Samples for HealthCheck, Monitoring and Feature Management
 
 ## Run the sample locally
 
-Navigate to the `microservices` folder in a CLI. Then run the command `tye run`. Tye dashboard will be available at `http://127.0.0.1:8000/`
+- Navigate to the `microservices` folder in a CLI. Then run the command `tye run`. Tye dashboard will be available at `http://127.0.0.1:8000/`
 
-![](/imgs/tye-local-run.png)
+    ![](/imgs/tye-local-run.png)
 
 If you're new to Tye, checkout the [getting started](https://github.com/dotnet/tye/blob/main/docs/getting_started.md) guide first.
 
